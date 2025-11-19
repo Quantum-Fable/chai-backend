@@ -5,12 +5,12 @@ import { loginUser,
          refreshAccessToken, 
          changeCurrentUserPassword,
          getCurrentUser, 
-         updateAccountDetails,
          updateUserAvatar, 
          updateUserCoverImage,
          getUserChannelProfile,
-         getUserChannelProfile,
-         getwatchHistory } from "../controllers/user.controller.js";
+         getwatchHistory ,
+        updateAccountDetails
+    } from "../controllers/user.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 const router = Router()

@@ -128,7 +128,7 @@ if(!user) {
   const isPasswordValid = await user.isPasswordCorrect(password);
   console.log(isPasswordValid);
   console.log(user.password);
-   console.log(token)
+   //console.log(token)
 
   if(!isPasswordValid) {
     throw new ApiError(401, "Invalid user credentials")
@@ -166,8 +166,8 @@ const logoutUser = asyncHandler(async(req, res) => {
   await  User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined
+      $unset: {
+        refreshToken: 1
       }
     },
       {
@@ -359,7 +359,9 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
 
           const channel = await User.aggregate([
             {
-              $match: username?.toLowerCase()
+              $match:{
+                username: username.toLowerCase()
+              } 
             },
             {
               $lookup: {
@@ -424,7 +426,7 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
       const user = await User.aggregate([
         {
           $match: {
-            _id: mongoose.Types.ObjectId(req.user?._id)
+            _id: new mongoose.Types.ObjectId(req.user?._id)
           }
         },
         {
